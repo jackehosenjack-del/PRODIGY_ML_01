@@ -32,5 +32,8 @@ jobs:
       - name: Run Evaluation v3
         run: python evaluation_v3.py
 
+      - name: Run final locked champion validation
+        run: python final_validation.py
+
       - name: Run training pipeline
         run: python HOUSE.py
