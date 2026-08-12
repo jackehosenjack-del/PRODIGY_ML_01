@@ -29,5 +29,8 @@ jobs:
       - name: Run Evaluation v2
         run: python evaluation.py
 
+      - name: Run Evaluation v3
+        run: python evaluation_v3.py
+
       - name: Run training pipeline
         run: python HOUSE.py
