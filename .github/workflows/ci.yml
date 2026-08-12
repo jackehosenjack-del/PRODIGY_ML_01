@@ -35,5 +35,18 @@ jobs:
       - name: Run final locked champion validation
         run: python final_validation.py
 
+      - name: Build reproducible Model v3 artifact
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        run: python model_v3.py
+
+      - name: Upload Model v3 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-v3-${{ github.sha }}
+          path: |
+            model_v3.joblib
+            model_v3_metadata.json
+
       - name: Run training pipeline
         run: python HOUSE.py
