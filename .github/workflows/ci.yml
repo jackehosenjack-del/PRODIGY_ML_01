@@ -2,7 +2,7 @@ name: ML CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, v4-experiment]
   pull_request:
     branches: [main]
 
@@ -35,18 +35,30 @@ jobs:
       - name: Run final locked champion validation
         run: python final_validation.py
 
+      - name: Run Model v4 nested evaluation
+        run: python evaluation_v4.py
+
       - name: Build reproducible Model v3 artifact
+        if: github.ref == 'refs/heads/main'
         env:
           GITHUB_SHA: ${{ github.sha }}
         run: python model_v3.py
 
       - name: Upload Model v3 artifact
+        if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
         with:
           name: model-v3-${{ github.sha }}
           path: |
             model_v3.joblib
             model_v3_metadata.json
+
+      - name: Upload Model v4 evaluation
+        if: github.ref == 'refs/heads/v4-experiment'
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-v4-evaluation-${{ github.sha }}
+          path: model_v4_evaluation.json
 
       - name: Run training pipeline
         run: python HOUSE.py
