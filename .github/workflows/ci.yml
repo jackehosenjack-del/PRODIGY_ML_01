@@ -23,8 +23,11 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
 
-      - name: Run model tests
+      - name: Run model and evaluation tests
         run: python -m pytest -q
+
+      - name: Run Evaluation v2
+        run: python evaluation.py
 
       - name: Run training pipeline
         run: python HOUSE.py
